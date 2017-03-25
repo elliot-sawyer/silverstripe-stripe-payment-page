@@ -43,22 +43,23 @@ class StripePaymentPage_Controller extends Page_Controller
         if($token && Email::is_valid_address($email)) {
             $key = Config::inst()->get('Stripe', 'secret_key');
             \Stripe\Stripe::setApiKey($key);
+
+            //@todo we need a local StripeCustomer object to capture minimal data here
             $customer = \Stripe\Customer::create(array(
                 'email' => $email,
                 'source'  => $token
             ));
 
             //charge $50
-            //@todo We'd get the real price by querying an order_id passed in from the form'
+            //@todo We need a local StripeCharge object to capture minimal data here
             $charge = \Stripe\Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => 5000,
+                'amount'   => 5000, //amount in cents
                 'currency' => 'usd'
             ));
 
-            $values = (array) $charge;
-            // debug::dump([$values, $charge->amount, $charge->currency]);
-
+            //@todo this should redirect to an action determined by the outcome of $charge
+            //that action will display saved data
             return $this->customise([
               'Amount' => number_format($charge->amount / 100, 2),
               'Currency' => $charge->currency
