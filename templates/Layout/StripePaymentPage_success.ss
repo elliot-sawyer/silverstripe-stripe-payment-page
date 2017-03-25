@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="row">
         <section class="col-md-10 col-md-offset-1">
@@ -9,8 +11,7 @@
     </div>
     <div class="row">
         <section class="col-md-7 col-md-offset-1">
-            $Content.RichLinks
-            <% include StripePaymentForm %>
+            You have been charged $Currency.UpperCase $Amount
         </section>
 
         <aside class="col-md-3">
